@@ -51,7 +51,8 @@ class MyDataset(torch.utils.data.Dataset):
     def __get_classes__(self):
         """Creates a list of classes with >= n_obs observations"""
         n_obs = self.n_obs
-        path = os.path.join(self.root, "images")
+        # path = os.path.join(self.root, "images")
+        path = self.root
 
         obj_name = []
         classes = []
@@ -80,7 +81,8 @@ class MyDataset(torch.utils.data.Dataset):
     def __get_boxes__(self):
         """Make sure you only get images with valid boxes frrom the classes list - see __get_classes__"""
 
-        path = os.path.join(self.root, "images")
+        # path = os.path.join(self.root, "images")
+        path = self.root
 
         boxes = []
         # Get all objects that have been annotated
@@ -104,9 +106,12 @@ class MyDataset(torch.utils.data.Dataset):
         class_to_int = dict(zip(self.classes,self.classes_int))        
 
         # load images
-        img_path = os.path.join(self.root, "images", self.imgs[idx])
-        box_path = os.path.join(self.root, "images", self.boxes[idx])
+        # img_path = os.path.join(self.root, "images", self.imgs[idx])
+        # box_path = os.path.join(self.root, "images", self.boxes[idx])
         
+        img_path = os.path.join(self.root, self.imgs[idx])
+        box_path = os.path.join(self.root, self.boxes[idx])
+
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
