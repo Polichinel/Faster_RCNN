@@ -258,6 +258,15 @@ def plot_img_bbox(img, target, fig_path):
     # Bounding boxes are defined as follows: x-min y-min width height
     fig, a = plt.subplots(1,1)
     fig.set_size_inches(5,5)
+
+    # if the funciton torch_to_pil have not been apllied
+    if type(img) == torch.Tensor:
+        img = torch.moveaxis(img, 0, -1)
+    elif type(img) == np.ndarray:
+        img = np.moveaxis(img, 0, -1)
+    else: 
+        pass
+
     a.imshow(img)
     for box in (target['boxes']):
         # specify cpu just in case.
@@ -314,4 +323,11 @@ def apply_nms(orig_prediction, iou_thresh=0.3):
 
 # function to convert a torchtensor back to PIL image
 def torch_to_pil(img):
+
+    # fixing the dims.
+    if type(img) == torch.Tensor:
+        img = torch.moveaxis(img, 0, -1)
+    elif type(img) == np.ndarray:
+        img = np.moveaxis(img, 0, -1)
+
     return torchtrans.ToPILImage()(img).convert('RGB')
