@@ -110,7 +110,7 @@ optimizer = torch.optim.SGD(params, lr=0.005,
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
 
 # training for 10 epochs
-num_epochs = 2
+num_epochs = 10
 # num_epochs = 100
 
 
@@ -123,8 +123,7 @@ for epoch in range(num_epochs):
     evaluate(model, data_loader_test, device=device)
 
 # pick one image from the test set
-# img, target = dataset_test[5]
-img, target = dataset[5]
+img, target = dataset[0]
 
 # put the model in evaluation mode
 model.eval()
@@ -153,10 +152,7 @@ plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS)
 print('NMS APPLIED MODEL OUTPUT plottet')
 
 # lets try the test set:
-# test_dataset = FruitImagesDataset(test_dir, 480, 480, transforms= get_transform(train=True))
-# pick one image from the test set
-# img, target = test_dataset[10]
-img, target = dataset_test[10]
+img, target = dataset_test[0]
 
 # put the model in evaluation mode
 model.eval()
