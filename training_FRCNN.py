@@ -55,6 +55,10 @@ print('length of dataset = ', len(dataset), '\n')
 img, target = dataset[78]
 print(img.shape, '\n',target)
 
+# creating dir for figures:
+figures_path = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures'
+os.makedirs(figures_path, exist_ok=True)
+
 # plotting the image with bboxes. Feel free to change the index
 img, target = dataset[25]
 fig_path = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_initial_eks.jpg'
