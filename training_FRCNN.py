@@ -159,11 +159,11 @@ model.eval()
 with torch.no_grad():
     prediction = model([img.to(device)])[0]
     
-fig_path_EO_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_EO_test.jpg'
+fig_path_EO_test = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO_test.jpg'
 plot_img_bbox(torch_to_pil(img), target, fig_path_EO_test)
 print('EXPECTED (test) OUTPUT plotted\n')
 
-fig_path_NMS_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_NMS_test.jpg'
+fig_path_NMS_test = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_NMS_test.jpg'
 nms_prediction = apply_nms(prediction, iou_thresh=0.01)
 plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS_test)
 print('MODEL OUTPUT (test) plotted\n')

@@ -323,18 +323,6 @@ def apply_nms(orig_prediction, iou_thresh=0.3):
 
 # function to convert a torchtensor back to PIL image
 def torch_to_pil(img):
-
-    # # fixing the dims.
-    # if type(img) == torch.Tensor:
-    #     img = torch.moveaxis(img.squeeze(), 0, -1)
-    # elif type(img) == np.ndarray:
-    #     img = np.moveaxis(img.squeeze(), 0, -1)
-    # else:
-    #     pass
-
     img = img.squeeze()
-
-    print('image changed...')
-
     return torchtrans.ToPILImage()(img).convert('RGB')
 
