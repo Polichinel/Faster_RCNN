@@ -326,8 +326,8 @@ def torch_to_pil(img):
 
     # fixing the dims.
     if type(img) == torch.Tensor:
-        img = torch.moveaxis(img, 0, -1)
+        img = torch.squeeze().moveaxis(img, 0, -1)
     elif type(img) == np.ndarray:
-        img = np.moveaxis(img, 0, -1)
+        img = np.squeeze().moveaxis(img, 0, -1)
 
     return torchtrans.ToPILImage()(img).convert('RGB')
