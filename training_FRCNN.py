@@ -136,10 +136,10 @@ print(f'img shape (squeeze): {img.squeeze().shape}')
 print(f'img shape (squeeze, axis moved): {torch.moveaxis(img.squeeze(), 0, -1).shape}')
 
 
-# #plot EXPECTED OUTPUT
-# fig_path_EO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO.jpg'
-# plot_img_bbox(torch_to_pil(img), target, fig_path_EO)
-# print('EXPECTED OUTPUT plotted')
+#plot EXPECTED OUTPUT
+fig_path_EO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO.jpg'
+plot_img_bbox(torch_to_pil(img), target, fig_path_EO)
+print('EXPECTED OUTPUT plotted')
 
 # #plot MODEL OUTPUT
 # fig_path_MO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_MO.jpg'

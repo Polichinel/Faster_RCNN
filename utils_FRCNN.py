@@ -329,5 +329,10 @@ def torch_to_pil(img):
         img = torch.moveaxis(img.squeeze(), 0, -1)
     elif type(img) == np.ndarray:
         img = np.moveaxis(img.squeeze(), 0, -1)
+    else:
+        pass
+
+    print('image changed...')
 
     return torchtrans.ToPILImage()(img).convert('RGB')
+
