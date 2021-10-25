@@ -37,7 +37,7 @@ from albumentations.pytorch import ToTensorV2
 
 # Create data loader class:
 class MyDataset(torch.utils.data.Dataset):
-    def __init__(self, root = files_dir, transforms = None, n_obs = 50):
+    def __init__(self, root, transforms = None, n_obs = 50):
         self.root = root
         self.transforms = transforms
         self.n_obs = n_obs
