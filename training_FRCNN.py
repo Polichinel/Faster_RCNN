@@ -110,7 +110,7 @@ optimizer = torch.optim.SGD(params, lr=0.005,
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
 
 # training for 10 epochs
-num_epochs = 10
+num_epochs = 2
 # num_epochs = 100
 
 
@@ -133,41 +133,41 @@ with torch.no_grad():
     
 print(f'img shape: {img.shape}')
 print(f'img shape (squeeze): {img.squeeze().shape}')
-print(f'img shape (squeeze, axis moved): {torch.moveaxis(img.squeeze(), 0, -1)}')
+print(f'img shape (squeeze, axis moved): {torch.moveaxis(img.squeeze(), 0, -1).shape}')
 
 
-#plot EXPECTED OUTPUT
-fig_path_EO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO.jpg'
-plot_img_bbox(torch_to_pil(img), target, fig_path_EO)
-print('EXPECTED OUTPUT plotted')
+# #plot EXPECTED OUTPUT
+# fig_path_EO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO.jpg'
+# plot_img_bbox(torch_to_pil(img), target, fig_path_EO)
+# print('EXPECTED OUTPUT plotted')
 
-#plot MODEL OUTPUT
-fig_path_MO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_MO.jpg'
-plot_img_bbox(torch_to_pil(img), prediction, fig_path_MO)
-print('MODEL OUTPUT plotted')
+# #plot MODEL OUTPUT
+# fig_path_MO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_MO.jpg'
+# plot_img_bbox(torch_to_pil(img), prediction, fig_path_MO)
+# print('MODEL OUTPUT plotted')
 
-# NON-MAX-Surpresssion
-nms_prediction = apply_nms(prediction, iou_thresh=0.2)
-fig_path_NMS = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_NMS.jpg'
-plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS)
-print('NMS APPLIED MODEL OUTPUT plottet')
+# # NON-MAX-Surpresssion
+# nms_prediction = apply_nms(prediction, iou_thresh=0.2)
+# fig_path_NMS = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_NMS.jpg'
+# plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS)
+# print('NMS APPLIED MODEL OUTPUT plottet')
 
-# lets try the test set:
-# test_dataset = FruitImagesDataset(test_dir, 480, 480, transforms= get_transform(train=True))
-# pick one image from the test set
-# img, target = test_dataset[10]
-img, target = dataset_test[10]
+# # lets try the test set:
+# # test_dataset = FruitImagesDataset(test_dir, 480, 480, transforms= get_transform(train=True))
+# # pick one image from the test set
+# # img, target = test_dataset[10]
+# img, target = dataset_test[10]
 
-# put the model in evaluation mode
-model.eval()
-with torch.no_grad():
-    prediction = model([img.to(device)])[0]
+# # put the model in evaluation mode
+# model.eval()
+# with torch.no_grad():
+#     prediction = model([img.to(device)])[0]
     
-fig_path_EO_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_EO_test.jpg'
-plot_img_bbox(torch_to_pil(img), target, fig_path_EO_test)
-print('EXPECTED (test) OUTPUT plotted\n')
+# fig_path_EO_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_EO_test.jpg'
+# plot_img_bbox(torch_to_pil(img), target, fig_path_EO_test)
+# print('EXPECTED (test) OUTPUT plotted\n')
 
-fig_path_NMS_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_NMS_test.jpg'
-nms_prediction = apply_nms(prediction, iou_thresh=0.01)
-plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS_test)
-print('MODEL OUTPUT (test) plotted\n')
+# fig_path_NMS_test = '/home/projects/ku_00017/people/simpol/scripts/fruits/figures/plot_NMS_test.jpg'
+# nms_prediction = apply_nms(prediction, iou_thresh=0.01)
+# plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS_test)
+# print('MODEL OUTPUT (test) plotted\n')
