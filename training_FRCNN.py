@@ -131,6 +131,10 @@ model.eval()
 with torch.no_grad():
     prediction = model([img.to(device)])[0]
     
+print(f'img shape: {img.shape}')
+print(f'img shape (squeeze): {img.squeeze().shape}')
+print(f'img shape (squeeze, axis moved): {torch.moveaxis(img.squeeze(), 0, -1)}')
+
 
 #plot EXPECTED OUTPUT
 fig_path_EO = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_EO.jpg'
