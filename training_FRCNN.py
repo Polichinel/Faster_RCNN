@@ -110,8 +110,8 @@ optimizer = torch.optim.SGD(params, lr=0.005,
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
 
 # training for 10 epochs
-num_epochs = 10
-# num_epochs = 100
+# num_epochs = 10
+num_epochs = 100
 
 
 for epoch in range(num_epochs):
@@ -167,3 +167,7 @@ fig_path_NMS_test = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster
 nms_prediction = apply_nms(prediction, iou_thresh=0.01)
 plot_img_bbox(torch_to_pil(img), nms_prediction, fig_path_NMS_test)
 print('MODEL OUTPUT (test) plotted\n')
+
+model_path = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/my_model_weights.pth'
+torch.save(model.state_dict(), model_path)
+print('Model weights saved!')
