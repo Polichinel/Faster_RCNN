@@ -69,6 +69,7 @@ plot_img_bbox(img, target, fig_path)
 # use our dataset and defined transformations
 dataset_full = MyDataset(files_dir) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # dataset_test = FruitImagesDataset(files_dir, 480, 480, transforms= get_transform(train=False))
+# so you do not change size... you prop should...
 
 # split the dataset in train and test set
 torch.manual_seed(1)
@@ -110,8 +111,8 @@ optimizer = torch.optim.SGD(params, lr=0.005,
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
 
 # training for 10 epochs
-# num_epochs = 10
-num_epochs = 100
+num_epochs = 10
+# num_epochs = 100
 
 
 for epoch in range(num_epochs):

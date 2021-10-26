@@ -43,7 +43,8 @@ class MyDataset(torch.utils.data.Dataset):
         self.n_obs = n_obs
 
         # the selection need to happen here
-        self.classes = [''] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
+        # self.classes = [''] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
+        self.classes = [_] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
         self.classes_int = np.arange(0,len(self.classes)) # from 1 since no background '0'
         self.boxes = self.__get_boxes__() # list of xml files (box info) to n_obs, see __get_classes__
         self.imgs = [f"{i.split('.')[0]}.jpg" for i in self.boxes] # list of images - only take images with box info! and > n_obs
@@ -51,7 +52,6 @@ class MyDataset(torch.utils.data.Dataset):
     def __get_classes__(self):
         """Creates a list of classes with >= n_obs observations"""
         n_obs = self.n_obs
-        # path = os.path.join(self.root, "images")
         path = self.root
 
         obj_name = []
@@ -81,7 +81,6 @@ class MyDataset(torch.utils.data.Dataset):
     def __get_boxes__(self):
         """Make sure you only get images with valid boxes frrom the classes list - see __get_classes__"""
 
-        # path = os.path.join(self.root, "images")
         path = self.root
 
         boxes = []
@@ -103,11 +102,8 @@ class MyDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         # dict to convert classes into classes_int
-        class_to_int = dict(zip(self.classes,self.classes_int))        
+        class_to_int = dict(zip(self.classes,self.classes_int)) # is it here???!?!?!   
 
-        # load images
-        # img_path = os.path.join(self.root, "images", self.imgs[idx])
-        # box_path = os.path.join(self.root, "images", self.boxes[idx])
         
         img_path = os.path.join(self.root, self.imgs[idx])
         box_path = os.path.join(self.root, self.boxes[idx])
@@ -203,7 +199,7 @@ class MyDataset(torch.utils.data.Dataset):
             'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'N/A', 'dining table',
             'N/A', 'N/A', 'toilet', 'N/A', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone',
             'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'N/A', 'book',
-            'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush'] # a "ordered" list of the coco categories
+            'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush'] # a "ordered" list of the coco categories. should remove perhaps?
         return(inst_classes) 
 
 
@@ -284,7 +280,7 @@ def plot_img_bbox(img, target, fig_path):
 def get_object_detection_model(num_classes):
 
     # load a model pre-trained pre-trained on COCO
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True) # you should be able to change pretrained from here..
     
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
