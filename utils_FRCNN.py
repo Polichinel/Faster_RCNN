@@ -56,7 +56,7 @@ class MyDataset(torch.utils.data.Dataset):
         path = self.root
 
         obj_name = []
-        classes = []
+        #classes = []
 
         # Get all objects that have been annotated
         for filename in os.listdir(path):
@@ -71,16 +71,18 @@ class MyDataset(torch.utils.data.Dataset):
 
 
         # now, only keep the objects w/ >= n_obs observations
-        c = Counter(obj_name)
+        # c = Counter(obj_name)
 
-        for i in c.items():
+        # for i in c.items():
 
-            # this might be the issue! Changing the int here does not change it in the xml file... 
-            # if i[1] >= n_obs:
-            #     classes.append(i[0])
+        #  #   this might be the issue! Changing the int here does not change it in the xml file... 
+        #     if i[1] >= n_obs:
+        #         classes.append(i[0])
 
-            classes.append(i[0])        
+        #     classes.append(i[0])    # whar does this do now?     
         
+        classes = sorted(set(obj_name))
+
         return(classes)
 
     def __get_boxes__(self):
