@@ -44,7 +44,9 @@ class MyDataset(torch.utils.data.Dataset):
 
         # the selection need to happen here
         # self.classes = [''] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
-        self.classes = [_] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
+        # self.classes = [_] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
+        self.classes = ['background'] + self.__get_classes__() # list of classes accroding to n_obs, see __get_classes__
+
         self.classes_int = np.arange(0,len(self.classes)) # from 1 since no background '0'
         self.boxes = self.__get_boxes__() # list of xml files (box info) to n_obs, see __get_classes__
         self.imgs = [f"{i.split('.')[0]}.jpg" for i in self.boxes] # list of images - only take images with box info! and > n_obs
