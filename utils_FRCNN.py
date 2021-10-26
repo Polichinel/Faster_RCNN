@@ -99,7 +99,7 @@ class MyDataset(torch.utils.data.Dataset):
                     boxes.append(filename)
 
         # Sort and return the boxes
-        boxes = sorted(boxes)
+        # boxes = sorted(boxes) # is this what is fucking you up?!?!?!?!?!??!?!?!??!?!?
         return(boxes)
 
     def __getitem__(self, idx):
