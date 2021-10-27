@@ -284,11 +284,15 @@ def plot_img_bbox(img, target, fig_path):
         a.add_patch(rect)
     plt.savefig(fig_path, bbox_inches = "tight")
 
-def get_object_detection_model(num_classes):
+def get_object_detection_model(num_classes, retrain_all_param = True):
 
     # load a model pre-trained pre-trained on COCO
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True) # you should be able to change pretrained from here..
     
+    # Retrain all parameters if retrain_all_param == True
+    for param in model.parameters():
+        param.requires_grad = retrain_all_param
+
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     # replace the pre-trained head with a new one
