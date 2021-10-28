@@ -306,16 +306,17 @@ def get_object_detection_model_retina(num_classes, retrain_all_param = True):
 
     # load a model pre-trained pre-trained on COCO
     #model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True) # you should be able to change pretrained from here..
-    model = torchvision.models.detection.retinanet_resnet50_fpn(pretrained=True)
+    model = torchvision.models.detection.retinanet_resnet50_fpn(num_classes = num_classes, pretrained=True)
 
     # Retrain all parameters if retrain_all_param == True
     for param in model.parameters():
         param.requires_grad = retrain_all_param
 
+    # THIS HERE MUST CHANGE!!!
     # get number of input features for the classifier
-    in_features = model.roi_heads.box_predictor.cls_score.in_features
-    # replace the pre-trained head with a new one
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes) 
+    # in_features = model.roi_heads.box_predictor.cls_score.in_features
+    # # replace the pre-trained head with a new one
+    # model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes) 
     # Per default new layers have requires_grad = True, so if retrain_all_param = False, this layer will still train 
 
     return model
