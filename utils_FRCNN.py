@@ -297,6 +297,7 @@ def get_object_detection_model(num_classes, retrain_all_param = True):
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     # replace the pre-trained head with a new one
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes) 
+    # Per default new layers have requires_grad = True, so if retrain_all_param = False, this layer will still train 
 
     return model
 
@@ -315,6 +316,21 @@ def get_transform(train):
                         ], bbox_params={'format': 'pascal_voc', 'label_fields': ['labels']})
 
 # the function takes the original prediction and the iou threshold.
+
+def train_test_split(dataset_full, train_ratio = 0.85):
+    # split the dataset in train and test set
+    torch.manual_seed(1)
+    indices = torch.randperm(len(dataset_full)).tolist()
+
+    n_images = len(indices)
+
+    indices_train = indices[int(-n_images*train_ratio):]
+    indices_test = indices[:int(-n_images*train_ratio)]
+
+    dataset_train = torch.utils.data.Subset(dataset_full, indices_train)
+    dataset_test = torch.utils.data.Subset(dataset_full, indices_test)
+
+    return(dataset_train, dataset_test)
 
 def apply_nms(orig_prediction, iou_thresh=0.3):
     

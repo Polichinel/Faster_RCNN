@@ -38,6 +38,7 @@ from utils_FRCNN import train_one_epoch # corrected foir linear_lr error
 from utils_FRCNN import MyDataset # the data loader
 from utils_FRCNN import get_object_detection_model
 from utils_FRCNN import get_transform
+from utils_FRCNN import train_test_split
 from utils_FRCNN import apply_nms
 from utils_FRCNN import torch_to_pil
 
@@ -48,11 +49,11 @@ from albumentations.pytorch import ToTensorV2
 
 files_dir = '/home/projects/ku_00017/data/raw/bodies/OD_images_annotated'
 
-dataset = MyDataset(files_dir) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-print('length of dataset = ', len(dataset), '\n')
+dataset_full = MyDataset(files_dir) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+print('length of dataset = ', len(dataset_full), '\n')
 
 # getting the image and target for a test index.  Feel free to change the index.
-img, target = dataset[78]
+img, target = dataset_full[78]
 print(img.shape, '\n',target)
 
 # creating dir for figures:
@@ -60,34 +61,40 @@ figures_path = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN
 os.makedirs(figures_path, exist_ok=True)
 
 # plotting the image with bboxes. Feel free to change the index
-img, target = dataset[25]
+img, target = dataset_full[25]
 fig_path = '/home/projects/ku_00017/people/simpol/scripts/bodies/Faster_RCNN/figures/plot_initial_eks.jpg'
 plot_img_bbox(img, target, fig_path)
 
 # path = os.path.join(files_dir, "images")
 
 # use our dataset and defined transformations
-dataset_full = MyDataset(files_dir) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#dataset_full = MyDataset(files_dir) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # dataset_test = FruitImagesDataset(files_dir, 480, 480, transforms= get_transform(train=False))
 # so you do not change size... you prop should...
 
-# split the dataset in train and test set
-torch.manual_seed(1)
-indices = torch.randperm(len(dataset)).tolist()
+# # split the dataset in train and test set OLD
+# torch.manual_seed(1)
+# indices = torch.randperm(len(dataset)).tolist()
 
-# split the dataset in train and test set
-indices = torch.randperm(len(dataset_full)).tolist()
-dataset = torch.utils.data.Subset(dataset_full, indices[:-160])
-dataset_test = torch.utils.data.Subset(dataset_full, indices[-160:])
+# # split the dataset in train and test set
+# indices = torch.randperm(len(dataset_full)).tolist()
+# dataset = torch.utils.data.Subset(dataset_full, indices[:-160])
+# dataset_test = torch.utils.data.Subset(dataset_full, indices[-160:])
+
+# # split the dataset in train and test set
+dataset, dataset_test = train_test_split(dataset_full)
+
+print(f'number of images in trainset: {len(dataset)}')
+print(f'number of images in testset: {len(dataset_test)}')
 
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
-    dataset, batch_size=10, shuffle=True, num_workers=4,
+    dataset, batch_size=2, shuffle=True, num_workers=4,
     collate_fn=utils.collate_fn)
 
 data_loader_test = torch.utils.data.DataLoader(
-    dataset_test, batch_size=10, shuffle=False, num_workers=4,
+    dataset_test, batch_size=2, shuffle=False, num_workers=4,
     collate_fn=utils.collate_fn)
 
 # to train on gpu if selected.
