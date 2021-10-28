@@ -90,7 +90,7 @@ print(f'number of images in testset: {len(dataset_test)}')
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
-    dataset, batch_size=16, shuffle=True, num_workers=4,
+    dataset, batch_size=8, shuffle=True, num_workers=4,
     collate_fn=utils.collate_fn)
 
 data_loader_test = torch.utils.data.DataLoader(
