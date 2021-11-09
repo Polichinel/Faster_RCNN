@@ -119,7 +119,7 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1
 
 # training for 10 epochs
 # num_epochs = 10
-num_epochs = 500
+num_epochs = 1000
 
 
 for epoch in range(num_epochs):
